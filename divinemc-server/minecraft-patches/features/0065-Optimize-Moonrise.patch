@@ -31,7 +31,7 @@ index ede85aa9452a6b71265b10385d5581c37d6976b0..cdef28ddfbce3a63a9b816a14e84aed6
      }
  
 diff --git a/ca/spottedleaf/moonrise/patches/chunk_system/level/entity/EntityLookup.java b/ca/spottedleaf/moonrise/patches/chunk_system/level/entity/EntityLookup.java
-index 56e71bf01f22579c294c6b33450bd282e082f6ae..2046f94d6ce0313d7989abbfdaef7620679633d6 100644
+index 6e8d405b38f5378a187c14bc3aa26cf8180e2119..7dd4d97a4cd3d0fc58cc37098c27f2b1f5f53227 100644
 --- a/ca/spottedleaf/moonrise/patches/chunk_system/level/entity/EntityLookup.java
 +++ b/ca/spottedleaf/moonrise/patches/chunk_system/level/entity/EntityLookup.java
 @@ -93,8 +93,14 @@ public abstract class EntityLookup implements LevelEntityGetter<Entity> {
@@ -448,7 +448,7 @@ index f5af5d2001f91d65096202eb0a06c9e527865ea2..c7776439b8a02f459ff9c4fb5c09d016
      }
  
 diff --git a/net/minecraft/server/level/ServerLevel.java b/net/minecraft/server/level/ServerLevel.java
-index e3c1394189b153ac81151b05d26ca4548e690294..65cc87b87b4151e2024338a6778359dff1b3a4fb 100644
+index 2b1eb8c5566c10fe40f3f8328af5beff9f820229..c662ff16cd3cf306779b733945b2d208c53bb248 100644
 --- a/net/minecraft/server/level/ServerLevel.java
 +++ b/net/minecraft/server/level/ServerLevel.java
 @@ -195,6 +195,7 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
@@ -489,7 +489,7 @@ index e3c1394189b153ac81151b05d26ca4548e690294..65cc87b87b4151e2024338a6778359df
          final ca.spottedleaf.moonrise.common.util.SimpleThreadUnsafeRandom simpleRandom = this.simpleRandom;
          final boolean doubleTickFluids = !ca.spottedleaf.moonrise.common.PlatformHooks.get().configFixMC224294();
  
-@@ -2804,16 +2804,13 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
+@@ -2807,16 +2807,13 @@ public class ServerLevel extends Level implements WorldGenLevel, ServerEntityGet
  
      public boolean isPositionTickingWithEntitiesLoaded(final long key) {
          // Paper start - rewrite chunk system

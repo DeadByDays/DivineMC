@@ -37,7 +37,7 @@ index 14bd5efe0da5c268f9b8fc014c4a14b68dcbee8d..352856ade8cbbbbeb90961de3b65d9a9
  
      protected NonNullList(final List<E> list, final @Nullable E defaultValue) {
 diff --git a/net/minecraft/server/level/ChunkMap.java b/net/minecraft/server/level/ChunkMap.java
-index 756f78fb8c1a44ea1671259d49125aecf18507b8..7cf873738904101f8dfc5011622a0d99441c0f46 100644
+index 7d7962fbf2f9d6068e43978ddc7f20d0bc12d41a..179627ccce48610c9bff3da9d4aaf51182002b90 100644
 --- a/net/minecraft/server/level/ChunkMap.java
 +++ b/net/minecraft/server/level/ChunkMap.java
 @@ -139,8 +139,10 @@ public class ChunkMap extends SimpleRegionStorage implements ChunkHolder.PlayerP
@@ -54,10 +54,10 @@ index 756f78fb8c1a44ea1671259d49125aecf18507b8..7cf873738904101f8dfc5011622a0d99
      public int serverViewDistance;
      public final WorldGenContext worldGenContext; // Paper - public
 diff --git a/net/minecraft/world/level/Level.java b/net/minecraft/world/level/Level.java
-index d60d20900acbdb6a3d34851cf14f824eea876f7e..7bac57335d5795c8b5cf60e72b308d6a261d9c15 100644
+index 3fa2712d0b1b1361fb4e9c6bc49440f0c092144c..ea46127eca64c17c414e373948473691d2a713e5 100644
 --- a/net/minecraft/world/level/Level.java
 +++ b/net/minecraft/world/level/Level.java
-@@ -266,7 +266,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+@@ -267,7 +267,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
      @Override
      public final <T extends Entity> List<T> getEntitiesOfClass(final Class<T> entityClass, final AABB boundingBox, final Predicate<? super T> predicate) {
          Profiler.get().incrementCounter("getEntities");
@@ -66,7 +66,7 @@ index d60d20900acbdb6a3d34851cf14f824eea876f7e..7bac57335d5795c8b5cf60e72b308d6a
  
          ((ca.spottedleaf.moonrise.patches.chunk_system.level.ChunkSystemLevel)this).moonrise$getEntityLookup().getEntities(entityClass, null, boundingBox, ret, predicate);
  
-@@ -276,7 +276,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
+@@ -277,7 +277,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable, ca.spottedl
      @Override
      public final List<Entity> moonrise$getHardCollidingEntities(final Entity entity, final AABB box, final Predicate<? super Entity> predicate) {
          Profiler.get().incrementCounter("getEntities");

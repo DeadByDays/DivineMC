@@ -327,7 +327,7 @@ index 01719a81cea75654a0d7eac52fd43ebf2d692b9c..cea7580694426b45ba540489a60c8aee
  
      @Override
      public int getHighestBlockYAt(int x, int z, org.bukkit.HeightMap heightMap) {
-+        if (org.bxteam.divinemc.config.DivineConfig.AsyncCategory.enableParallelWorldTicking) ca.spottedleaf.moonrise.common.util.TickThread.ensureTickThread(this.world, x >> 4, z >> 4, "Cannot retrieve chunk asynchronously"); // DivineMC - Parallel world ticking
++        // DivineMC - PWT compat: async chunk/height read-guard on getHighestBlockYAt() removed for MythicMobs (read only)
          warnUnsafeChunk("getting a faraway chunk", x >> 4, z >> 4); // Paper
          // Transient load for this tick
          return this.world.getChunk(x >> 4, z >> 4).getHeight(CraftHeightMap.toNMS(heightMap), x, z);
@@ -371,11 +371,11 @@ index 94bea317e89e52794c0cb031417a920697d01cb5..ee755450f668e32329476f95942d71e7
      }
  
      public net.minecraft.world.level.block.state.BlockState getNMS() {
-+        // DivineMC start - Parallel world ticking
-+        if (org.bxteam.divinemc.config.DivineConfig.AsyncCategory.enableParallelWorldTicking && world instanceof ServerLevel serverWorld) {
-+            ca.spottedleaf.moonrise.common.util.TickThread.ensureTickThread(serverWorld, position, "Cannot read world asynchronously");
-+        }
-+        // DivineMC end - Parallel world ticking
++        // DivineMC - PWT compat: async world-read guard on getNMS() removed.
++        // MythicMobs reads block state from its async scheduler; allowing the
++        // read here (as on vanilla Paper) avoids hard-throws under parallel
++        // world ticking. This is a READ only; all write guards remain in place.
++        // (original ensureTickThread(serverWorld, position, ...) check deleted)
          return this.world.getBlockState(this.position);
      }
  

@@ -27,7 +27,7 @@ diff --git a/net/minecraft/network/protocol/game/ClientboundLevelChunkPacketData
 index 33ca4c2110673dee34b66c8d05ee83c4df828f2e..36c6c006f46e252248e231b6de4cef4d2aff67d7 100644
 --- a/net/minecraft/network/protocol/game/ClientboundLevelChunkPacketData.java
 +++ b/net/minecraft/network/protocol/game/ClientboundLevelChunkPacketData.java
-@@ -75,6 +75,52 @@ public class ClientboundLevelChunkPacketData {
+@@ -75,6 +75,53 @@ public class ClientboundLevelChunkPacketData {
          }
      }
  
@@ -36,13 +36,13 @@ index 33ca4c2110673dee34b66c8d05ee83c4df828f2e..36c6c006f46e252248e231b6de4cef4d
 +        this.heightmaps = heightmaps;
 +
 +        if (Thread.currentThread() instanceof org.bxteam.divinemc.async.AsyncChunkSend.AsyncChunkSendThread) {
-+            int size = calculateChunkSize(levelChunk);
-+            ByteBuf buffer = Unpooled.buffer(size);
-+            extractChunkData(new FriendlyByteBuf(buffer), levelChunk, chunkPacketInfo);
-+            // make sure all sections is latest
-+            while (size != buffer.writerIndex()) {
++            // DivineMC - use dynamic buffer to avoid race condition when chunk is modified during serialization
++            ByteBuf buffer = Unpooled.buffer(2 * 1024 * 1024, 8 * 1024 * 1024);
++            try {
++                extractChunkData(new FriendlyByteBuf(buffer), levelChunk, chunkPacketInfo);
++            } catch (Exception e) {
++                // chunk changed during serialization - retry once with fresh buffer
 +                buffer.writerIndex(0);
-+                size = calculateChunkSize(levelChunk);
 +                extractChunkData(new FriendlyByteBuf(buffer), levelChunk, chunkPacketInfo);
 +            }
 +            byte[] array = it.unimi.dsi.fastutil.bytes.ByteArrays.setLength(buffer.array(), buffer.writerIndex());
@@ -80,7 +80,7 @@ index 33ca4c2110673dee34b66c8d05ee83c4df828f2e..36c6c006f46e252248e231b6de4cef4d
      public ClientboundLevelChunkPacketData(RegistryFriendlyByteBuf buffer, int x, int z) {
          this.heightmaps = HEIGHTMAPS_STREAM_CODEC.decode(buffer);
          int varInt = buffer.readVarInt();
-@@ -123,6 +169,8 @@ public class ClientboundLevelChunkPacketData {
+@@ -123,6 +170,8 @@ public class ClientboundLevelChunkPacketData {
              // Paper end  - Anti-Xray - Add chunk packet info
          }
  
